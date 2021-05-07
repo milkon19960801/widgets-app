@@ -6,6 +6,7 @@ const Search = () => {
   const [resutls, setResults] = useState([]);
 
   useEffect(() => {
+    console.log('Initial render or term was changed');
     // const response = (async () => await axios.get(''))();
 
     const search = async () => {
@@ -24,8 +25,14 @@ const Search = () => {
 
       setResults(data.query.search);
     };
-
-    search();
+    const timeoutId = setTimeout(() => {
+      if (term) {
+        search();
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [term]);
 
   const renderedResults = resutls.map(result => {
