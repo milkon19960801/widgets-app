@@ -6,9 +6,6 @@ const Search = () => {
   const [resutls, setResults] = useState([]);
 
   useEffect(() => {
-    console.log('Initial render or term was changed');
-    // const response = (async () => await axios.get(''))();
-
     const search = async () => {
       const { data } = await await axios.get(
         'https://en.wikipedia.org/w/api.php',
@@ -22,17 +19,21 @@ const Search = () => {
           },
         }
       );
-
       setResults(data.query.search);
     };
-    const timeoutId = setTimeout(() => {
-      if (term) {
-        search();
-      }
-    }, 1000);
-    return () => {
-      clearTimeout(timeoutId);
-    };
+
+    if (term && !resutls.length) search();
+    else {
+      const timeoutId = setTimeout(() => {
+        if (term) {
+          search();
+        }
+      }, 1000);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
   }, [term]);
 
   const renderedResults = resutls.map(result => {
