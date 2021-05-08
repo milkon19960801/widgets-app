@@ -29,6 +29,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         onClick={() => {
           onSelectedChange(option);
         }}
+        style={{ color: option.value }}
       >
         {option.label}
       </div>
@@ -44,6 +45,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
             setOpen(!open);
           }}
           className={`ui selection dropdown ${open ? 'visible active' : ''}`}
+          style={{ color: selected.value }}
         >
           <i className="dropdown icon"></i>
           <div className="text">{selected.label}</div>
